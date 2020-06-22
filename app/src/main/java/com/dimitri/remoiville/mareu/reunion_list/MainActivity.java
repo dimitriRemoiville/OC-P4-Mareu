@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.dimitri.remoiville.mareu.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -26,6 +27,12 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().add(R.id.container,mReunionFragment).commit();
 
         FloatingActionButton addButton = findViewById(R.id.addButton);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddReunionActivity.navigate(MainActivity.this);
+            }
+        });
     }
 
     @Override
