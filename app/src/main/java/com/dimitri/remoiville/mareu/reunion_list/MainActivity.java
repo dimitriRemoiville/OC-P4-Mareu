@@ -8,10 +8,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.dimitri.remoiville.mareu.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
 
     Toolbar mToolbar;
+    ReunionFragment mReunionFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +21,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+
+        mReunionFragment = new ReunionFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.container,mReunionFragment).commit();
+
+        FloatingActionButton addButton = findViewById(R.id.addButton);
     }
 
     @Override
