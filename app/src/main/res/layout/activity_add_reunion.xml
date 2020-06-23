@@ -1,66 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="10dp"
+    android:orientation="vertical"
     tools:context=".reunion_list.AddReunionActivity">
 
-    <LinearLayout
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_view_information_reunion"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="1dp"
+        app:cardMaxElevation="1.2dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true">
 
         <LinearLayout
-            android:id="@+id/time_Layout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:gravity="center">
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:orientation="vertical">
 
-            <TimePicker
-                android:id="@+id/time_in"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/name_reunion_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:timePickerMode="spinner"/>
+                android:layout_marginTop="20dp">
 
-        </LinearLayout>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_view_information_reunion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="5dp"
-            app:cardElevation="1dp"
-            app:cardMaxElevation="1.2dp"
-            app:cardPreventCornerOverlap="true"
-            app:cardUseCompatPadding="true"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/time_Layout">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/name_reunion_layout"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/name_reunion_in"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/name_reunion_in"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
@@ -68,22 +42,35 @@
                         android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <LinearLayout
-                    android:id="@+id/room_layout"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
+            <LinearLayout
+                android:id="@+id/room_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:gravity="center"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/pick_room_txt"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
-                    android:gravity="center">
+                    android:layout_marginEnd="9dp"
+                    android:layout_weight="0.63"
+                    android:text="Salle"
+                    android:textAlignment="center"
+                    android:visibility="gone" />
 
-                    <Spinner
-                        android:id="@+id/room_spinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:tooltipText="Salle de réunion"
-                        android:hint="Salle de réunion"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/pick_room_btn"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.37"
+                    android:enabled="true"
+                    android:hint="Sélectionner la salle"
+                    app:cornerRadius="20dp" />
 
-                </LinearLayout>
+            </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/participant_layout"
@@ -98,25 +85,118 @@
                         android:id="@+id/pick_participant_txt"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="9dp"
                         android:layout_weight="0.63"
                         android:text="Nombre"
                         android:textAlignment="center"
-                        android:layout_marginEnd="9dp"/>
+                        android:visibility="gone" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/pick_participant_btn"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        style="@style/Widget.MaterialComponents.Button"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.37"
-                        app:cornerRadius="20dp"
                         android:enabled="true"
-                        android:hint="Sélectionner les participants"/>
+                        android:hint="Sélectionner les participants"
+                        app:cornerRadius="20dp" />
 
                 </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_view_date_time_reunion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="1dp"
+        app:cardMaxElevation="1.2dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:text="Sélection de la date et de l'heure"
+                android:textColor="@android:color/black"
+                android:textAlignment="center"
+                android:textSize="18sp"/>
+
+            <LinearLayout
+                android:id="@+id/date_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/pick_date_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="9dp"
+                    android:layout_weight="0.63"
+                    android:text="Date"
+                    android:textAlignment="center"
+                    android:visibility="gone" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/pick_date_btn"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.37"
+                    android:enabled="true"
+                    android:hint="Choisir la date"
+                    android:visibility="visible"
+                    app:cornerRadius="20dp" />
+
+
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+            <LinearLayout
+                android:id="@+id/time_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/pick_time_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="9dp"
+                    android:layout_weight="0.63"
+                    android:text="Heure de début"
+                    android:textAlignment="center"
+                    android:visibility="gone" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/pick_time_btn"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.37"
+                    android:enabled="true"
+                    android:hint="Choisir l'heure de début"
+                    app:cornerRadius="20dp" />
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/create_btn"
@@ -129,20 +209,5 @@
             android:text="Valider"
             app:cornerRadius="20dp"
             android:textSize="16sp" />
-    </LinearLayout>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -25,10 +25,10 @@ public class DummyReunionGenerator {
 
 
     public static final List<Reunion> DUMMY_REUNIONS = Arrays.asList(
-            new Reunion(1,"Réunion A", "14h00",DUMMY_PEACH, Arrays.asList(DUMMY_MAXIME, DUMMY_ALEX, DUMMY_LUC)),
-            new Reunion(2,"Réunion B", "16h00",DUMMY_MARIO, Arrays.asList(DUMMY_PAUL, DUMMY_VIVIANE)),
-            new Reunion(3,"Réunion C", "19h00",DUMMY_LUIGI, Arrays.asList(DUMMY_AMADINE, DUMMY_LUC, DUMMY_MAXIME, DUMMY_PAUL)),
-            new Reunion(4,"Réunion D", "12h00", DUMMY_BOWSER, Arrays.asList(DUMMY_PAUL))
+            new Reunion(1,"Réunion A", "20202306","14h00",DUMMY_PEACH, Arrays.asList(DUMMY_MAXIME, DUMMY_ALEX, DUMMY_LUC)),
+            new Reunion(2,"Réunion B", "20202306","16h00",DUMMY_MARIO, Arrays.asList(DUMMY_PAUL, DUMMY_VIVIANE)),
+            new Reunion(3,"Réunion C", "20202306","19h00",DUMMY_LUIGI, Arrays.asList(DUMMY_AMADINE, DUMMY_LUC, DUMMY_MAXIME, DUMMY_PAUL)),
+            new Reunion(4,"Réunion D", "20202306","12h00", DUMMY_BOWSER, Arrays.asList(DUMMY_PAUL))
     );
 
     static List<Reunion> generateReunions() {

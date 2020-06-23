@@ -15,7 +15,7 @@ public class Reunion {
     private String name;
 
     /** Date - YYYYMMDD */
-    private int date;
+    private String date;
 
     /** Start time */
     private String time;
@@ -27,7 +27,7 @@ public class Reunion {
     private List<Participant> participants;
 
 
-    public Reunion(long id, String name, String time, Room room, List<Participant> participants) {
+    public Reunion(long id, String name, String date, String time, Room room, List<Participant> participants) {
         this.id = id;
         this.name = name;
         this.date = date;
@@ -52,11 +52,11 @@ public class Reunion {
         this.name = name;
     }
 
-    public int getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(int date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
