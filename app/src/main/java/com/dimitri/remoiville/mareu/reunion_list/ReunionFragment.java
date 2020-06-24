@@ -5,6 +5,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.DatePicker;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -12,13 +17,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.DatePicker;
 
 import com.dimitri.remoiville.mareu.R;
 import com.dimitri.remoiville.mareu.di.DI;
@@ -43,6 +41,9 @@ public class ReunionFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private Context mContext;
     private List<Reunion> mReunions;
+    private List<Reunion> mFilteredMeetingList = new ArrayList<>();
+    // No filter = false / Filter = true
+    private boolean mfilter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -80,7 +81,7 @@ public class ReunionFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        defaultFilter();
+        DefaultFilter();
     }
 
     @Override
@@ -102,7 +103,12 @@ public class ReunionFragment extends Fragment {
     @Subscribe
     public void onDeleteReunion(DeleteReunionEvent event) {
         mApiService.deleteReunion(event.Reunion);
-        initList(mReunions);
+        if (mfilter) {
+            mFilteredMeetingList.remove(event.Reunion);
+            Filter();
+        } else {
+            DefaultFilter();
+        }
     }
 
     @Override
@@ -114,8 +120,8 @@ public class ReunionFragment extends Fragment {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_filter_by_room) {
+            mFilteredMeetingList.clear();
             final List<Room> roomsList = mApiService.getRooms();
-            final List<Reunion> filteredList = new ArrayList<>();
             final String[] listItems = new String[roomsList.size()];
             final int[] checkedItem = {0};
             final int[] mRoomPosition = new int[1];
@@ -140,10 +146,10 @@ public class ReunionFragment extends Fragment {
                     pickedRoom[0] = roomsList.get(mRoomPosition[0]);
                     for (Reunion r: mReunions) {
                         if (pickedRoom[0].equals(r.getRoom())) {
-                            filteredList.add(r);
+                            mFilteredMeetingList.add(r);
                         }
                     }
-                    initList(filteredList);
+                    Filter();
                 }
             });
             builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
@@ -157,7 +163,7 @@ public class ReunionFragment extends Fragment {
             return true;
         }
         if (id == R.id.action_filter_by_date) {
-            final List<Reunion> filteredList = new ArrayList<>();
+            mFilteredMeetingList.clear();
             final Calendar cldr = Calendar.getInstance();
             int day = cldr.get(Calendar.DAY_OF_MONTH);
             int month = cldr.get(Calendar.MONTH);
@@ -172,23 +178,29 @@ public class ReunionFragment extends Fragment {
                             + String.format("%02d", day);
                     for (Reunion r: mReunions) {
                         if (pickedDate[0].equals(r.getDate())) {
-                            filteredList.add(r);
+                            mFilteredMeetingList.add(r);
                         }
                     }
-                    initList(filteredList);
+                    Filter();
                 }
             }, year, month, day);
             datePickerDialog.show();
             return true;
         }
         if (id == R.id.action_filter_default) {
-            defaultFilter();
+            DefaultFilter();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void defaultFilter() {
+    private void DefaultFilter() {
+        mfilter = false;
         mReunions = mApiService.getReunions();
         initList(mReunions);
+    }
+
+    private void Filter() {
+        mfilter = true;
+        initList(mFilteredMeetingList);
     }
 }
