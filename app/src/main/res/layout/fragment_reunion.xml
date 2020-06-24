@@ -14,37 +14,39 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/round_50dp" />
+        android:src="@drawable/round_50dp"/>
 
     <LinearLayout
         android:id="@+id/item_list_reunion_text_layout"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintStart_toEndOf="@id/item_list_reunion_image"
+        android:layout_marginStart="10dp"
         app:layout_constraintBottom_toBottomOf="@id/item_list_reunion_image"
-        app:layout_constraintTop_toTopOf="@id/item_list_reunion_image">
+        app:layout_constraintStart_toEndOf="@id/item_list_reunion_image"
+        app:layout_constraintTop_toTopOf="@id/item_list_reunion_image"
+        app:layout_constraintEnd_toStartOf="@id/item_list_delete_button"
+        app:layout_constraintHorizontal_bias="0">
 
         <TextView
             android:id="@+id/item_list_reunion_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:ellipsize="marquee"
+            android:singleLine="true"
             android:text="Réunion A - 14h00 - Mario"
             android:textColor="@android:color/black"
             android:textSize="17sp"
-            android:textStyle="bold"
-            android:maxLines="1"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/item_list_reunion_participant"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="maxime@lamazone.com"
-            android:textColor="@android:color/black"/>
+            android:textColor="@android:color/black" />
 
     </LinearLayout>
 

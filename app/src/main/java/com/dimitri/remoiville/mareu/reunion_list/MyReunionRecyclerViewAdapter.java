@@ -13,8 +13,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.dimitri.remoiville.mareu.event.DeleteReunionEvent;
 import com.dimitri.remoiville.mareu.model.Reunion;
 import com.dimitri.remoiville.mareu.R;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -38,7 +41,7 @@ public class MyReunionRecyclerViewAdapter extends RecyclerView.Adapter<MyReunion
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        Reunion reunion = mReunions.get(position);
+        final Reunion reunion = mReunions.get(position);
         holder.mReunionName.setText(reunion.getName() +
                 " - " + reunion.getTime() + " - " + reunion.getRoom().getName());
         String eMailsList= "";
@@ -54,7 +57,13 @@ public class MyReunionRecyclerViewAdapter extends RecyclerView.Adapter<MyReunion
         mDrawable = DrawableCompat.wrap(mDrawable);
         DrawableCompat.setTint(mDrawable, Color.parseColor(reunion.getRoom().getColor()));
         holder.mReunionImage.setImageDrawable(mDrawable);
-        // TODO: Add listener on delete button
+
+        holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EventBus.getDefault().post(new DeleteReunionEvent(reunion));
+            }
+        });
     }
 
     @Override

@@ -3,8 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.dimitri.remoiville.mareu.reunion_list.MainActivity">
     <item
-        android:id="@+id/action_filter1"
-        android:orderInCategory="100"
-        android:title="filtre 1"
-        app:showAsAction="never" />
+        android:id="@+id/action_filter_default"
+        android:title="Retirer le filtre"
+        />
+    <item
+        android:id="@+id/action_filter_by_room"
+        android:title="Filtrer par salle" />
+    <item
+        android:id="@+id/action_filter_by_date"
+        android:title="Filtrer par date"/>
 </menu>
