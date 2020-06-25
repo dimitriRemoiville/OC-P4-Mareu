@@ -8,9 +8,9 @@ import java.util.List;
 
 public class DummyReunionApiService implements ReunionApiService {
 
-    private final List<Reunion> reunions = DummyReunionGenerator.generateReunions();
-    private final List<Room> rooms = Room.getList();
-    private final List<Participant> participants = Participant.getList();
+    private List<Reunion> reunions = DummyReunionGenerator.generateReunions();
+    private List<Room> rooms = Room.getList();
+    private List<Participant> participants = Participant.getList();
 
     @Override
     public List<Reunion> getReunions() {
@@ -25,6 +25,12 @@ public class DummyReunionApiService implements ReunionApiService {
     @Override
     public void createReunion(Reunion reunion) {
         reunions.add(reunion);
+    }
+
+    @Override
+    public void clearReunions() {
+        reunions.clear();
+        reunions = DummyReunionGenerator.generateReunions();
     }
 
     @Override

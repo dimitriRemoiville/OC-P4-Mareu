@@ -14,6 +14,8 @@ public interface ReunionApiService {
 
     void createReunion(Reunion reunion);
 
+    void clearReunions();
+
     List<Room> getRooms();
 
     List<Participant> getParticipants();

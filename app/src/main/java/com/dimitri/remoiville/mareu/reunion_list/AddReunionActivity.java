@@ -63,7 +63,6 @@ public class AddReunionActivity extends AppCompatActivity {
     private boolean mParticipantsOk;
     private boolean mDateOk;
     private boolean mTimeOk;
-    private static final String TAG = "AddReunionActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +110,6 @@ public class AddReunionActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 mNameOk = (editable.length() > 0);
                 EnabledAddButton();
-                Log.d(TAG, "afterTextChanged: name " + mNameOk);
             }
         });
     }
@@ -148,7 +146,6 @@ public class AddReunionActivity extends AppCompatActivity {
                         mRoomOk = true;
                         CheckData();
                         EnabledAddButton();
-                        Log.d(TAG, "onClick: room " + mRoomOk);
                     }
                 });
                 builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
@@ -204,7 +201,6 @@ public class AddReunionActivity extends AppCompatActivity {
                         }
                         mParticipantsOk = true;
                         EnabledAddButton();
-                        Log.d(TAG, "onClick: participants " + mParticipantsOk);
 
                     }
                 });
@@ -240,7 +236,6 @@ public class AddReunionActivity extends AppCompatActivity {
                         mDateOk = true;
                         CheckData();
                         EnabledAddButton();
-                        Log.d(TAG, "onDateSet: date " + mDateOk);
                     }
                 }, year, month, day);
                 mDatePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
@@ -264,7 +259,6 @@ public class AddReunionActivity extends AppCompatActivity {
                         mTimeOk = true;
                         CheckData();
                         EnabledAddButton();
-                        Log.d(TAG, "onTimeSet: time " + mTimeOk);
                     }
                 }, hour, minutes, true);
                 mTimePickerDialog.show();
@@ -273,16 +267,11 @@ public class AddReunionActivity extends AppCompatActivity {
     }
 
     private void CheckData() {
-        Log.d(TAG, "CheckData: " + mTimeOk + " " + mDateOk + " " + mRoomOk);
         if (mTimeOk && mDateOk && mRoomOk) {
             for (Reunion r : mReunions) {
-                Log.d(TAG, "CheckData - Date: -" + r.getDate() + "- / -" + mPickedDate + "-");
-                Log.d(TAG, "CheckData - Time: -" + r.getTime() + "- / -" + mTimeTxt.getText().toString() + "-");
-                Log.d(TAG, "CheckData - Room: -" + r.getRoom().getName() + "- / -" + mPickedRoom.getName() + "-");
                 if ((r.getDate().equals(mPickedDate))
                         && (r.getTime().equals(mTimeTxt.getText().toString()))
                         && (r.getRoom().getName().equals(mPickedRoom.getName()))) {
-                    Log.d(TAG, "CheckData: OK");
                     mDateOk = false;
                     mTimeOk = false;
                     mRoomOk = false;
@@ -325,7 +314,6 @@ public class AddReunionActivity extends AppCompatActivity {
     }
 
     private void EnabledAddButton() {
-        Log.d(TAG, "ManagingAddBtn: " + mNameOk + " " + mRoomOk + " " + mParticipantsOk + " " + mDateOk + " " + mTimeOk);
         if (mNameOk && mRoomOk && mParticipantsOk && mDateOk && mTimeOk) {
             mAddButton.setEnabled(true);
         }

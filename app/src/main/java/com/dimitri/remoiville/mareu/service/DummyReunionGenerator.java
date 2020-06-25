@@ -36,10 +36,12 @@ public class DummyReunionGenerator {
 
 
     public static final List<Reunion> DUMMY_REUNIONS = Arrays.asList(
-            new Reunion(1,"Réunion A", "20200623","14h00",DUMMY_PEACH, Arrays.asList(DUMMY_MAXIME, DUMMY_ALEX, DUMMY_LUC)),
-            new Reunion(2,"Réunion B", "20200623","16h00",DUMMY_MARIO, Arrays.asList(DUMMY_PAUL, DUMMY_VIVIANE)),
-            new Reunion(3,"Réunion C", "20200623","19h00",DUMMY_LUIGI, Arrays.asList(DUMMY_AMADINE, DUMMY_LUC, DUMMY_MAXIME, DUMMY_PAUL)),
-            new Reunion(4,"Réunion D", "20200623","12h00", DUMMY_BOWSER, Arrays.asList(DUMMY_PAUL))
+            new Reunion(1, "Réunion A", "20200623", "14h00", DUMMY_PEACH, Arrays.asList(DUMMY_MAXIME, DUMMY_ALEX, DUMMY_LUC)),
+            new Reunion(2, "Réunion B", "20200623", "16h00", DUMMY_MARIO, Arrays.asList(DUMMY_PAUL, DUMMY_VIVIANE)),
+            new Reunion(3, "Réunion C", "20200623", "19h00", DUMMY_LUIGI, Arrays.asList(DUMMY_AMADINE, DUMMY_LUC, DUMMY_MAXIME, DUMMY_PAUL)),
+            new Reunion(4, "Réunion D", "20200623", "12h00", DUMMY_BOWSER, Arrays.asList(DUMMY_PAUL)),
+            new Reunion(5, "Réunion E", "20200630", "17h00", DUMMY_LUIGI, Arrays.asList(DUMMY_AMADINE, DUMMY_LUC, DUMMY_MAXIME, DUMMY_PAUL)),
+            new Reunion(6, "Réunion F", "20200630", "11h00", DUMMY_YOSHI, Arrays.asList(DUMMY_AMADINE, DUMMY_LUC, DUMMY_MAXIME, DUMMY_PAUL, DUMMY_LIONEL))
     );
 
     static List<Reunion> generateReunions() {
