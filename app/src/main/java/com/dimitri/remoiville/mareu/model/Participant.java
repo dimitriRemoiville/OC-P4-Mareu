@@ -17,7 +17,7 @@ public class Participant {
     /** Email address */
     private String email;
 
-    private static final List<Participant> list = new ArrayList<Participant>();
+    private static final List<Participant> list = new ArrayList<>();
     {
         Participant.list.add(this);
     }

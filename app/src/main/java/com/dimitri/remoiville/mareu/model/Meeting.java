@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Model object representing a Reunion
+ * Model object representing a Meeting
  */
-public class Reunion {
+public class Meeting {
 
     /** Identifier */
     private long id;
@@ -27,7 +27,7 @@ public class Reunion {
     private List<Participant> participants;
 
 
-    public Reunion(long id, String name, String date, String time, Room room, List<Participant> participants) {
+    public Meeting(long id, String name, String date, String time, Room room, List<Participant> participants) {
         this.id = id;
         this.name = name;
         this.date = date;
@@ -89,13 +89,13 @@ public class Reunion {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Reunion reunion = (Reunion) o;
-        return id == reunion.id &&
-                Objects.equals(name, reunion.name) &&
-                Objects.equals(date, reunion.date) &&
-                Objects.equals(time, reunion.time) &&
-                Objects.equals(room, reunion.room) &&
-                Objects.equals(participants, reunion.participants);
+        Meeting meeting = (Meeting) o;
+        return id == meeting.id &&
+                Objects.equals(name, meeting.name) &&
+                Objects.equals(date, meeting.date) &&
+                Objects.equals(time, meeting.time) &&
+                Objects.equals(room, meeting.room) &&
+                Objects.equals(participants, meeting.participants);
     }
 
     @Override

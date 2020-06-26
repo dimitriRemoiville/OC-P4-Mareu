@@ -1,13 +1,9 @@
-package com.dimitri.remoiville.mareu.reunion_list;
+package com.dimitri.remoiville.mareu.meeting_list;
 
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -17,7 +13,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class MainActivity extends AppCompatActivity {
 
     Toolbar mToolbar;
-    ReunionFragment mReunionFragment;
+    MeetingFragment mMeetingFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,14 +22,14 @@ public class MainActivity extends AppCompatActivity {
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
-        mReunionFragment = new ReunionFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.container, mReunionFragment).commit();
+        mMeetingFragment = new MeetingFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.container, mMeetingFragment).commit();
 
         FloatingActionButton addButton = findViewById(R.id.addButton);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddReunionActivity.navigate(MainActivity.this);
+                AddMeetingActivity.navigate(MainActivity.this);
             }
         });
     }

@@ -3,12 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/list_reunion"
-    android:name="com.dimitri.remoiville.mareu.reunion_list.ReunionFragment"
+    android:id="@+id/list_meeting"
+    android:name="com.dimitri.remoiville.mareu.meeting_list.MeetingFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".reunion_list.ReunionFragment"
-    tools:listitem="@layout/fragment_reunion" />
+    tools:context=".meeting_list.MeetingFragment"
+    tools:listitem="@layout/fragment_meeting" />

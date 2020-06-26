@@ -14,7 +14,7 @@ public class Room {
     /** Color */
     private String color;
 
-    private static final List<Room> list = new ArrayList<Room>();
+    private static final List<Room> list = new ArrayList<>();
     {
         Room.list.add(this);
     }

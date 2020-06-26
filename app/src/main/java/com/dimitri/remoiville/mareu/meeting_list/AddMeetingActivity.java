@@ -1,4 +1,4 @@
-package com.dimitri.remoiville.mareu.reunion_list;
+package com.dimitri.remoiville.mareu.meeting_list;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -22,10 +21,10 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.dimitri.remoiville.mareu.R;
 import com.dimitri.remoiville.mareu.di.DI;
+import com.dimitri.remoiville.mareu.model.Meeting;
 import com.dimitri.remoiville.mareu.model.Participant;
-import com.dimitri.remoiville.mareu.model.Reunion;
 import com.dimitri.remoiville.mareu.model.Room;
-import com.dimitri.remoiville.mareu.service.ReunionApiService;
+import com.dimitri.remoiville.mareu.service.MeetingApiService;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -34,9 +33,9 @@ import java.util.Calendar;
 import java.util.List;
 
 
-public class AddReunionActivity extends AppCompatActivity {
+public class AddMeetingActivity extends AppCompatActivity {
 
-    private TextInputLayout mNameReunionInput;
+    private TextInputLayout mNameMeetingInput;
     private TextView mRoomTxt;
     private MaterialButton mPickRoomBtn;
     private TextView mParticipantTxt;
@@ -51,13 +50,13 @@ public class AddReunionActivity extends AppCompatActivity {
     private DatePickerDialog mDatePickerDialog;
     private TimePickerDialog mTimePickerDialog;
 
-    private ReunionApiService mApiService;
-    private List<Reunion> mReunions = DI.getReunionApiService().getReunions();
-    private Context mContext = AddReunionActivity.this;
+    private MeetingApiService mApiService;
+    private final List<Meeting> mMeetings = DI.getMeetingApiService().getMeetings();
+    private final Context mContext = AddMeetingActivity.this;
 
     private String mPickedDate;
     private Room mPickedRoom;
-    private List<Participant> mPickedParticipants = new ArrayList<>();
+    private final List<Participant> mPickedParticipants = new ArrayList<>();
     private boolean mNameOk;
     private boolean mRoomOk;
     private boolean mParticipantsOk;
@@ -67,9 +66,9 @@ public class AddReunionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_reunion);
+        setContentView(R.layout.activity_add_meeting);
 
-        mNameReunionInput = findViewById(R.id.name_reunion_layout);
+        mNameMeetingInput = findViewById(R.id.name_meeting_layout);
         mRoomTxt = findViewById(R.id.pick_room_txt);
         mPickRoomBtn = findViewById(R.id.pick_room_btn);
         mParticipantTxt = findViewById(R.id.pick_participant_txt);
@@ -80,7 +79,7 @@ public class AddReunionActivity extends AppCompatActivity {
         mTimeTxt = findViewById(R.id.pick_time_txt);
         mPickTimeBtn = findViewById(R.id.pick_time_btn);
         mAddButton = findViewById(R.id.create_btn);
-        mApiService = DI.getReunionApiService();
+        mApiService = DI.getMeetingApiService();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mAddButton.setEnabled(false);
         mNameOk = mRoomOk = mParticipantsOk = mTimeOk = mDateOk = false;
@@ -95,7 +94,7 @@ public class AddReunionActivity extends AppCompatActivity {
     }
 
     private void ManagingNameInputLayout() {
-        mNameReunionInput.getEditText().addTextChangedListener(new TextWatcher() {
+        mNameMeetingInput.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -128,7 +127,7 @@ public class AddReunionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                builder.setTitle("Sélectionner la salle");
+                builder.setTitle(R.string.txt_room_button);
                 builder.setSingleChoiceItems(listItems, checkedItem[0], new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int position) {
@@ -148,7 +147,7 @@ public class AddReunionActivity extends AppCompatActivity {
                         EnabledAddButton();
                     }
                 });
-                builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(R.string.txt_cancel_button, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
@@ -174,7 +173,7 @@ public class AddReunionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                builder.setTitle("Sélectionner les participants");
+                builder.setTitle(R.string.txt_participants_button);
                 builder.setMultiChoiceItems(listItems, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int position, boolean isChecked) {
@@ -193,7 +192,7 @@ public class AddReunionActivity extends AppCompatActivity {
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        mParticipantTxt.setText(Integer.toString(mParticipantsItems.size()) + " X ");
+                        mParticipantTxt.setText(mParticipantsItems.size() + " X ");
                         mParticipantTxt.setVisibility(View.VISIBLE);
                         mPersonImg.setVisibility(View.VISIBLE);
                         for (int i = 0; i < mParticipantsItems.size(); i++) {
@@ -204,7 +203,7 @@ public class AddReunionActivity extends AppCompatActivity {
 
                     }
                 });
-                builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(R.string.txt_cancel_button, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -220,10 +219,10 @@ public class AddReunionActivity extends AppCompatActivity {
         mPickDateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Calendar cldr = Calendar.getInstance();
-                int day = cldr.get(Calendar.DAY_OF_MONTH);
-                int month = cldr.get(Calendar.MONTH);
-                int year = cldr.get(Calendar.YEAR);
+                final Calendar calendar = Calendar.getInstance();
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                int month = calendar.get(Calendar.MONTH);
+                int year = calendar.get(Calendar.YEAR);
                 mDatePickerDialog = new DatePickerDialog(mContext, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
@@ -248,9 +247,9 @@ public class AddReunionActivity extends AppCompatActivity {
         mPickTimeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Calendar cldr = Calendar.getInstance();
-                int hour = cldr.get(Calendar.HOUR_OF_DAY);
-                int minutes = cldr.get(Calendar.MINUTE);
+                final Calendar calendar = Calendar.getInstance();
+                int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                int minutes = calendar.get(Calendar.MINUTE);
                 mTimePickerDialog = new TimePickerDialog(mContext, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int sHour, int sMinute) {
@@ -268,7 +267,7 @@ public class AddReunionActivity extends AppCompatActivity {
 
     private void CheckData() {
         if (mTimeOk && mDateOk && mRoomOk) {
-            for (Reunion r : mReunions) {
+            for (Meeting r : mMeetings) {
                 if ((r.getDate().equals(mPickedDate))
                         && (r.getTime().equals(mTimeTxt.getText().toString()))
                         && (r.getRoom().getName().equals(mPickedRoom.getName()))) {
@@ -282,8 +281,8 @@ public class AddReunionActivity extends AppCompatActivity {
                     mDateTxt.setText("");
                     mDateTxt.setVisibility(View.GONE);
                     AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                    builder.setTitle("La salle n'est pas disponible")
-                            .setMessage("Veuillez choisir une autre salle ou changer la date ou l'heure")
+                    builder.setTitle(R.string.txt_error_room_title)
+                            .setMessage(R.string.txt_error_room_message)
                             .setCancelable(false)
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
@@ -300,14 +299,14 @@ public class AddReunionActivity extends AppCompatActivity {
         mAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Reunion reunion = new Reunion(
+                Meeting meeting = new Meeting(
                         System.currentTimeMillis(),
-                        mNameReunionInput.getEditText().getText().toString(),
+                        mNameMeetingInput.getEditText().getText().toString(),
                         mPickedDate,
                         mTimeTxt.getText().toString(),
                         mPickedRoom,
                         mPickedParticipants);
-                mApiService.createReunion(reunion);
+                mApiService.createMeeting(meeting);
                 finish();
             }
         });
@@ -319,13 +318,8 @@ public class AddReunionActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Used to navigate to this activity
-     *
-     * @param activity
-     */
     public static void navigate(FragmentActivity activity) {
-        Intent intent = new Intent(activity, AddReunionActivity.class);
+        Intent intent = new Intent(activity, AddMeetingActivity.class);
         ActivityCompat.startActivity(activity, intent, null);
     }
 }

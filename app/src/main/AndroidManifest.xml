@@ -8,15 +8,16 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:fullBackupContent="false">
         <activity
-            android:name=".reunion_list.AddReunionActivity"
-            android:label="Nouvelle Réunion"
-            android:parentActivityName=".reunion_list.MainActivity"
+            android:name=".meeting_list.AddMeetingActivity"
+            android:label="@string/txt_title_AddMeetingActivity"
+            android:parentActivityName=".meeting_list.MainActivity"
             android:theme="@style/AppTheme">
         </activity>
         <activity
-            android:name=".reunion_list.MainActivity"
+            android:name=".meeting_list.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
             android:configChanges="orientation|screenSize|keyboardHidden">

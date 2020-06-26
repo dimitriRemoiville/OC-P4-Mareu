@@ -1,15 +1,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.dimitri.remoiville.mareu.reunion_list.MainActivity">
+    tools:context="com.dimitri.remoiville.mareu.meeting_list.MainActivity">
     <item
         android:id="@+id/action_filter_default"
-        android:title="Retirer le filtre"
+        android:title="@string/txt_item_menu_no_filter"
         />
     <item
         android:id="@+id/action_filter_by_room"
-        android:title="Filtrer par salle" />
+        android:title="@string/txt_item_menu_filter_room" />
     <item
         android:id="@+id/action_filter_by_date"
-        android:title="Filtrer par date"/>
+        android:title="@string/txt_item_menu_filter_date"/>
 </menu>

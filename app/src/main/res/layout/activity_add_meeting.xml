@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:fillViewport="false">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:orientation="vertical"
-        tools:context=".reunion_list.AddReunionActivity">
+        tools:context=".meeting_list.AddMeetingActivity">
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_view_information_reunion"
+            android:id="@+id/card_view_information_meeting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="5dp"
@@ -31,18 +32,19 @@
                 android:orientation="vertical">
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/name_reunion_layout"
+                    android:id="@+id/name_meeting_layout"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/name_reunion_in"
+                        android:id="@+id/name_meeting_in"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:hint="@string/txt_input_layout_name_meeting"
                         android:ems="10"
-                        android:hint="Nom de la réunion"
+                        android:maxLength="20"
                         android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -60,7 +62,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="9dp"
                         android:layout_weight="0.63"
-                        android:text="Salle"
                         android:textAlignment="center"
                         android:visibility="gone" />
 
@@ -71,7 +72,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1.37"
                         android:enabled="true"
-                        android:hint="Sélectionner la salle"
+                        android:hint="@string/txt_room_button"
                         app:cornerRadius="20dp" />
 
                 </LinearLayout>
@@ -90,7 +91,6 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.43"
-                        android:text="Nombre"
                         android:textAlignment="center"
                         android:visibility="gone" />
 
@@ -101,7 +101,8 @@
                         android:layout_marginEnd="9dp"
                         android:layout_weight="0.20"
                         android:src="@drawable/ic_baseline_person_24"
-                        android:visibility="gone"/>
+                        android:visibility="gone"
+                        android:contentDescription="@string/desc_drawable_person" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/pick_participant_btn"
@@ -110,7 +111,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1.37"
                         android:enabled="true"
-                        android:hint="Sélectionner les participants"
+                        android:hint="@string/txt_participants_button"
                         app:cornerRadius="20dp" />
 
                 </LinearLayout>
@@ -118,7 +119,7 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_view_date_time_reunion"
+            android:id="@+id/card_view_date_time_meeting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -139,7 +140,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
-                    android:text="Sélection de la date et de l'heure"
+                    android:text="@string/txt_title_date_time"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"/>
@@ -158,7 +159,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="9dp"
                         android:layout_weight="0.63"
-                        android:text="Date"
                         android:textAlignment="center"
                         android:visibility="gone" />
 
@@ -169,7 +169,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1.37"
                         android:enabled="true"
-                        android:hint="Choisir la date"
+                        android:hint="@string/txt_date_button"
                         android:visibility="visible"
                         app:cornerRadius="20dp" />
 
@@ -191,7 +191,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="9dp"
                         android:layout_weight="0.63"
-                        android:text="Heure de début"
                         android:textAlignment="center"
                         android:visibility="gone" />
 
@@ -202,7 +201,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1.37"
                         android:enabled="true"
-                        android:hint="Choisir l'heure de début"
+                        android:hint="@string/txt_time_button"
                         app:cornerRadius="20dp" />
 
 
@@ -218,7 +217,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:enabled="false"
-            android:text="Valider"
+            android:text="@string/txt_add_button"
             app:cornerRadius="20dp"
             android:textSize="16sp" />
 

@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">Ma Réu</string>
+    <string name="txt_add_button">Valider</string>
+    <string name="txt_time_button">Choisir l\'heure de début</string>
+    <string name="txt_date_button">Choisir la date</string>
+    <string name="txt_title_date_time">Sélection de la date et de l\'heure</string>
+    <string name="txt_participants_button">Sélectionner les participants</string>
+    <string name="desc_drawable_person">desc_drawable_person</string>
+    <string name="txt_room_button">Sélectionner la salle</string>
+    <string name="desc_img_bin">bin</string>
+    <string name="desc_color_room">color of the room</string>
+    <string name="txt_input_layout_name_meeting">Nom de la réunion</string>
+    <string name="txt_item_menu_no_filter">Retirer le filtre</string>
+    <string name="txt_item_menu_filter_room">Filtrer par salle</string>
+    <string name="txt_item_menu_filter_date">Filtrer par date</string>
+    <string name="txt_error_room_title">La salle n\'est pas disponible</string>
+    <string name="txt_error_room_message">Veuillez choisir une autre salle ou changer la date ou l\'heure</string>
+    <string name="txt_cancel_button">Annuler</string>
+    <string name="txt_title_AddMeetingActivity">Nouvelle Réunion</string>
+    <string name="txt_dialog_filter_by_room">Sélectionner la salle à filtrer</string>
 </resources>

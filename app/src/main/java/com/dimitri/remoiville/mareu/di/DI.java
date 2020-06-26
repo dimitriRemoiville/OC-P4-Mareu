@@ -1,31 +1,31 @@
 package com.dimitri.remoiville.mareu.di;
 
-import com.dimitri.remoiville.mareu.service.DummyReunionApiService;
-import com.dimitri.remoiville.mareu.service.ReunionApiService;
+import com.dimitri.remoiville.mareu.service.DummyMeetingApiService;
+import com.dimitri.remoiville.mareu.service.MeetingApiService;
 
 /**
  * Dependency injector to get instance of services
  */
 public class DI {
 
-    private static final ReunionApiService service = new DummyReunionApiService();
+    private static final MeetingApiService service = new DummyMeetingApiService();
 
     /**
-     * Get an instance on @{@link ReunionApiService}
+     * Get an instance on @{@link MeetingApiService}
      *
-     * @return
+     * @return service
      */
-    public static ReunionApiService getReunionApiService() {
+    public static MeetingApiService getMeetingApiService() {
         return service;
     }
 
     /**
-     * Get always a new instance on @{@link ReunionApiService}. Useful for tests, so we ensure the context is clean.
+     * Get always a new instance on @{@link MeetingApiService}. Useful for tests, so we ensure the context is clean.
      *
-     * @return
+     * @return DummyMeetingApiService
      */
-    public static ReunionApiService getNewInstanceApiService() {
-        return new DummyReunionApiService();
+    public static MeetingApiService getNewInstanceApiService() {
+        return new DummyMeetingApiService();
     }
 }
 

@@ -1,20 +1,20 @@
 package com.dimitri.remoiville.mareu.service;
 
+import com.dimitri.remoiville.mareu.model.Meeting;
 import com.dimitri.remoiville.mareu.model.Participant;
-import com.dimitri.remoiville.mareu.model.Reunion;
 import com.dimitri.remoiville.mareu.model.Room;
 
 import java.util.List;
 
-public interface ReunionApiService {
+public interface MeetingApiService {
 
-    List<Reunion> getReunions();
+    List<Meeting> getMeetings();
 
-    void deleteReunion(Reunion reunion);
+    void deleteMeeting(Meeting meeting);
 
-    void createReunion(Reunion reunion);
+    void createMeeting(Meeting meeting);
 
-    void clearReunions();
+    void clearMeeting();
 
     List<Room> getRooms();
 
