@@ -68,14 +68,14 @@ public class MeetingFragment extends Fragment {
         super.onConfigurationChanged(newConfig);
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             mApiService.clearMeeting();
-            DefaultFilter();
+            defaultFilter();
         }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        DefaultFilter();
+        defaultFilter();
     }
 
     @Override
@@ -99,9 +99,9 @@ public class MeetingFragment extends Fragment {
         mApiService.deleteMeeting(event.Meeting);
         if (mFilter) {
             mFilteredMeetingList.remove(event.Meeting);
-            Filter();
+            filter();
         } else {
-            DefaultFilter();
+            defaultFilter();
         }
     }
 
@@ -110,86 +110,94 @@ public class MeetingFragment extends Fragment {
         int id = item.getItemId();
 
         if (id == R.id.action_filter_by_room) {
-            mFilteredMeetingList.clear();
-            final List<Room> roomsList = mApiService.getRooms();
-            final String[] listItems = new String[roomsList.size()];
-            final int[] checkedItem = {0};
-            final int[] mRoomPosition = new int[1];
-            final Room[] pickedRoom = new Room[1];
-
-            for (int i = 0; i < roomsList.size(); i++) {
-                listItems[i] = roomsList.get(i).getName();
-            }
-            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-            builder.setTitle(R.string.txt_dialog_filter_by_room);
-            builder.setSingleChoiceItems(listItems, checkedItem[0], new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int position) {
-                    mRoomPosition[0] = position;
-                }
-            });
-            builder.setCancelable(false);
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    checkedItem[0] = mRoomPosition[0];
-                    pickedRoom[0] = roomsList.get(mRoomPosition[0]);
-                    for (Meeting r: mMeetings) {
-                        if (pickedRoom[0].equals(r.getRoom())) {
-                            mFilteredMeetingList.add(r);
-                        }
-                    }
-                    Filter();
-                }
-            });
-            builder.setNegativeButton(R.string.txt_cancel_button, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
-                }
-            });
-            AlertDialog mDialog = builder.create();
-            mDialog.show();
+            filterByRoom();
             return true;
         }
         if (id == R.id.action_filter_by_date) {
-            mFilteredMeetingList.clear();
-            final Calendar calendar = Calendar.getInstance();
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
-            int month = calendar.get(Calendar.MONTH);
-            int year = calendar.get(Calendar.YEAR);
-            final String[] pickedDate = new String[1];
-            DatePickerDialog datePickerDialog = new DatePickerDialog(mContext, new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                    int realMonth = month + 1;
-                    pickedDate[0] = year
-                            + String.format("%02d", realMonth)
-                            + String.format("%02d", day);
-                    for (Meeting r: mMeetings) {
-                        if (pickedDate[0].equals(r.getDate())) {
-                            mFilteredMeetingList.add(r);
-                        }
-                    }
-                    Filter();
-                }
-            }, year, month, day);
-            datePickerDialog.show();
+            filterByDate();
             return true;
         }
         if (id == R.id.action_filter_default) {
-            DefaultFilter();
+            defaultFilter();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void DefaultFilter() {
+    private void filterByDate() {
+        mFilteredMeetingList.clear();
+        final Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH);
+        int year = calendar.get(Calendar.YEAR);
+        final String[] pickedDate = new String[1];
+        DatePickerDialog datePickerDialog = new DatePickerDialog(mContext, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                int realMonth = month + 1;
+                pickedDate[0] = year
+                        + String.format("%02d", realMonth)
+                        + String.format("%02d", day);
+                for (Meeting r: mMeetings) {
+                    if (pickedDate[0].equals(r.getDate())) {
+                        mFilteredMeetingList.add(r);
+                    }
+                }
+                filter();
+            }
+        }, year, month, day);
+        datePickerDialog.show();
+    }
+
+    private void filterByRoom() {
+        mFilteredMeetingList.clear();
+        final List<Room> roomsList = mApiService.getRooms();
+        final String[] listItems = new String[roomsList.size()];
+        final int[] checkedItem = {0};
+        final int[] mRoomPosition = new int[1];
+        final Room[] pickedRoom = new Room[1];
+
+        for (int i = 0; i < roomsList.size(); i++) {
+            listItems[i] = roomsList.get(i).getName();
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setTitle(R.string.txt_dialog_filter_by_room);
+        builder.setSingleChoiceItems(listItems, checkedItem[0], new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int position) {
+                mRoomPosition[0] = position;
+            }
+        });
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                checkedItem[0] = mRoomPosition[0];
+                pickedRoom[0] = roomsList.get(mRoomPosition[0]);
+                for (Meeting r: mMeetings) {
+                    if (pickedRoom[0].equals(r.getRoom())) {
+                        mFilteredMeetingList.add(r);
+                    }
+                }
+                filter();
+            }
+        });
+        builder.setNegativeButton(R.string.txt_cancel_button, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog mDialog = builder.create();
+        mDialog.show();
+    }
+
+    private void defaultFilter() {
         mFilter = false;
         mMeetings = mApiService.getMeetings();
         initList(mMeetings);
     }
 
-    private void Filter() {
+    private void filter() {
         mFilter = true;
         initList(mFilteredMeetingList);
     }

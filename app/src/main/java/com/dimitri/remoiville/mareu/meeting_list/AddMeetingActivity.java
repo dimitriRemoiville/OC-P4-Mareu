@@ -84,16 +84,16 @@ public class AddMeetingActivity extends AppCompatActivity {
         mAddButton.setEnabled(false);
         mNameOk = mRoomOk = mParticipantsOk = mTimeOk = mDateOk = false;
 
-        ManagingNameInputLayout();
-        GenerateListSingleChoiceRoom();
-        GenerateListMultipleChoiceParticipant();
-        DisplayDatePicker();
-        DisplayTimePicker();
+        managingNameInputLayout();
+        generateListSingleChoiceRoom();
+        generateListMultipleChoiceParticipant();
+        displayDatePicker();
+        displayTimePicker();
 
         ManagingAddBtn();
     }
 
-    private void ManagingNameInputLayout() {
+    private void managingNameInputLayout() {
         mNameMeetingInput.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -113,7 +113,7 @@ public class AddMeetingActivity extends AppCompatActivity {
         });
     }
 
-    private void GenerateListSingleChoiceRoom() {
+    private void generateListSingleChoiceRoom() {
         final List<Room> roomsList = mApiService.getRooms();
         final String[] listItems = new String[roomsList.size()];
         final int[] checkedItem = {0};
@@ -159,7 +159,7 @@ public class AddMeetingActivity extends AppCompatActivity {
         });
     }
 
-    private void GenerateListMultipleChoiceParticipant(){
+    private void generateListMultipleChoiceParticipant(){
         final List<Participant> participantsList = mApiService.getParticipants();
         final String[] listItems = new String[participantsList.size()];
         final boolean[] checkedItems = new boolean[participantsList.size()];
@@ -215,7 +215,7 @@ public class AddMeetingActivity extends AppCompatActivity {
         });
     }
 
-    private void DisplayDatePicker() {
+    private void displayDatePicker() {
         mPickDateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -243,7 +243,7 @@ public class AddMeetingActivity extends AppCompatActivity {
         });
     }
 
-    private void DisplayTimePicker() {
+    private void displayTimePicker() {
         mPickTimeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
