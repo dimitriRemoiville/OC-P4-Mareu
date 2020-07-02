@@ -10,7 +10,7 @@ import java.util.List;
 public class DummyMeetingApiService implements MeetingApiService {
 
     private List<Meeting> mMeetings = DummyMeetingGenerator.generateMeetings();
-    private List<Meeting> mFilteredMeetingList = new ArrayList<>();
+    private final List<Meeting> mFilteredMeetingList = new ArrayList<>();
     private final List<Room> rooms = Room.getList();
     private final List<Participant> participants = Participant.getList();
 

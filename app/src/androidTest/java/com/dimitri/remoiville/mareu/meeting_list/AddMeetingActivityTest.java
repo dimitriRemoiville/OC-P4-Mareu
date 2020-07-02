@@ -180,7 +180,6 @@ public class AddMeetingActivityTest {
         materialButton9.perform(scrollTo(), click());
 
         //Then:
-        List<Meeting> meetingList = mApiService.getMeetings();
         onView(ViewMatchers.withId(R.id.list_meeting)).check(withItemCount(ITEM_COUNT + 1));
     }
 

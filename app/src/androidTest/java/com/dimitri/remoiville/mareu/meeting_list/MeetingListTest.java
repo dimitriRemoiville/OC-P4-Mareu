@@ -12,8 +12,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
 import com.dimitri.remoiville.mareu.R;
-import com.dimitri.remoiville.mareu.model.Meeting;
-import com.dimitri.remoiville.mareu.service.DummyMeetingGenerator;
 import com.dimitri.remoiville.mareu.service.MeetingApiService;
 import com.dimitri.remoiville.mareu.di.DI;
 import com.dimitri.remoiville.mareu.utils.DeleteViewAction;
@@ -26,7 +24,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.List;
 
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
@@ -62,7 +59,6 @@ public class MeetingListTest {
         MainActivity activity = mActivityRule.getActivity();
         assertThat(activity, notNullValue());
         MeetingApiService apiService = DI.getMeetingApiService();
-        List<Meeting> meetingList = apiService.getMeetings();
     }
 
     /**
