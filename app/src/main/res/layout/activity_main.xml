@@ -38,6 +38,7 @@
         android:layout_margin="16dp"
         android:src="@drawable/ic_baseline_add_24"
         android:foregroundGravity="center"
+        app:tint="@android:color/white"
         app:backgroundTint="@color/addButton"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
