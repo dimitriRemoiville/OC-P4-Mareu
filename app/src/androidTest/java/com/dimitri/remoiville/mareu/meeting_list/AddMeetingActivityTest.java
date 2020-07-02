@@ -14,9 +14,7 @@ import androidx.test.runner.AndroidJUnit4;
 
 import com.dimitri.remoiville.mareu.R;
 import com.dimitri.remoiville.mareu.di.DI;
-import com.dimitri.remoiville.mareu.meeting_list.MainActivity;
 import com.dimitri.remoiville.mareu.model.Meeting;
-import com.dimitri.remoiville.mareu.service.DummyMeetingGenerator;
 import com.dimitri.remoiville.mareu.service.MeetingApiService;
 
 import org.hamcrest.Description;
@@ -39,7 +37,6 @@ import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
-import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.dimitri.remoiville.mareu.utils.RecyclerViewItemCountAssertion.withItemCount;
@@ -53,18 +50,15 @@ import static org.junit.Assert.assertThat;
 @RunWith(AndroidJUnit4.class)
 public class AddMeetingActivityTest {
 
-    private MainActivity mActivity;
-    private List<Meeting> mMeetingList;
     private MeetingApiService mApiService;
-    private final int ITEM_COUNT = 14;
 
     @Rule
-    public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
+    public final ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Before
     public void setUp() {
-        mActivity = mActivityTestRule.getActivity();
-        assertThat(mActivity, notNullValue());
+        MainActivity activity = mActivityTestRule.getActivity();
+        assertThat(activity, notNullValue());
         mApiService = DI.getMeetingApiService();
     }
 
@@ -82,6 +76,7 @@ public class AddMeetingActivityTest {
     @Test
     public void AddMeetingActivity_shouldAddNewReunion() {
         //Given: Adding a new reunion
+        int ITEM_COUNT = 14;
         onView(ViewMatchers.withId(R.id.list_meeting)).check(withItemCount(ITEM_COUNT));
         //Click on the AddButton
         ViewInteraction floatingActionButton = onView(allOf(withId(R.id.addButton),
@@ -165,16 +160,6 @@ public class AddMeetingActivityTest {
                         childAtPosition(withClassName(is("android.widget.LinearLayout")),1)),1), isDisplayed()));
         materialButton5.perform(click());
 
-        ViewInteraction appCompatImageButton = onView(allOf(withClassName(is("androidx.appcompat.widget.AppCompatImageButton")), withContentDescription("Next month"),
-                childAtPosition(allOf(withClassName(is("android.widget.DayPickerView")),
-                        childAtPosition(withClassName(is("com.android.internal.widget.DialogViewAnimator")),0)),2)));
-        appCompatImageButton.perform(scrollTo(), click());
-
-        ViewInteraction appCompatImageButton2 = onView(allOf(withClassName(is("androidx.appcompat.widget.AppCompatImageButton")), withContentDescription("Next month"),
-                childAtPosition(allOf(withClassName(is("android.widget.DayPickerView")),
-                        childAtPosition(withClassName(is("com.android.internal.widget.DialogViewAnimator")),0)),2)));
-        appCompatImageButton2.perform(scrollTo(), click());
-
         ViewInteraction materialButton6 = onView(allOf(withId(android.R.id.button1), withText("OK"),
                 childAtPosition(childAtPosition(withClassName(is("android.widget.ScrollView")),0),3)));
         materialButton6.perform(scrollTo(), click());
@@ -195,12 +180,8 @@ public class AddMeetingActivityTest {
         materialButton9.perform(scrollTo(), click());
 
         //Then:
-        mMeetingList = mApiService.getMeetings();
+        List<Meeting> meetingList = mApiService.getMeetings();
         onView(ViewMatchers.withId(R.id.list_meeting)).check(withItemCount(ITEM_COUNT + 1));
-        //onView(ViewMatchers.withId(R.id.item_list_meeting_name)).check(matches(withText("Test - 12h30 - Wario")));
-        //onView(ViewMatchers.withId(R.id.item_list_meeting_participant))
-        //        .check(matches(withText("maxime@lamzone.com, paul@lamzone.com, amadine@lamzone.com, theo@lamzone.com, lionel@lamzone.com, viviane@lamzone.com, luc@lamzone.com")));
-
     }
 
     private static Matcher<View> childAtPosition(

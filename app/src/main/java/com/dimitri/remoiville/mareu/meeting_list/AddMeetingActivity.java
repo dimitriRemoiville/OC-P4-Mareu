@@ -31,6 +31,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 
 public class AddMeetingActivity extends AppCompatActivity {
@@ -192,7 +193,8 @@ public class AddMeetingActivity extends AppCompatActivity {
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        mParticipantTxt.setText(mParticipantsItems.size() + " X ");
+                        String participant = mParticipantsItems.size() + " X ";
+                        mParticipantTxt.setText(participant);
                         mParticipantTxt.setVisibility(View.VISIBLE);
                         mPersonImg.setVisibility(View.VISIBLE);
                         for (int i = 0; i < mParticipantsItems.size(); i++) {
@@ -227,11 +229,12 @@ public class AddMeetingActivity extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                         int realMonth = month + 1;
-                        mDateTxt.setText(String.format("%02d", day) + "/" + String.format("%02d", realMonth) + "/" + year);
+                        String date = String.format(Locale.FRANCE,"%02d", day) + "/" + String.format(Locale.FRANCE,"%02d", realMonth) + "/" + year;
+                        mDateTxt.setText(date);
                         mDateTxt.setVisibility(View.VISIBLE);
                         mPickedDate = year
-                                + String.format("%02d", realMonth)
-                                + String.format("%02d", day);
+                                + String.format(Locale.FRANCE,"%02d", realMonth)
+                                + String.format(Locale.FRANCE,"%02d", day);
                         mDateOk = true;
                         CheckData();
                         EnabledAddButton();
@@ -253,7 +256,8 @@ public class AddMeetingActivity extends AppCompatActivity {
                 mTimePickerDialog = new TimePickerDialog(mContext, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int sHour, int sMinute) {
-                        mTimeTxt.setText(String.format("%02d", sHour) + "h" + String.format("%02d", sMinute));
+                        String time = String.format(Locale.FRANCE,"%02d", sHour) + "h" + String.format(Locale.FRANCE,"%02d", sMinute);
+                        mTimeTxt.setText(time);
                         mTimeTxt.setVisibility(View.VISIBLE);
                         mTimeOk = true;
                         CheckData();

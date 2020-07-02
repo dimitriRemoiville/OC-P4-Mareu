@@ -28,9 +28,9 @@ import com.dimitri.remoiville.mareu.service.MeetingApiService;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Fragment representing a list of Reunions.
@@ -41,7 +41,7 @@ public class MeetingFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private Context mContext;
     private List<Meeting> mMeetings;
-    private final List<Meeting> mFilteredMeetingList = new ArrayList<>();
+    private List<Meeting> mFilteredMeetingList;
     // No filter = false / Filter = true
     private boolean mFilter;
 
@@ -98,7 +98,7 @@ public class MeetingFragment extends Fragment {
     public void onDeleteMeeting(DeleteMeetingEvent event) {
         mApiService.deleteMeeting(event.Meeting);
         if (mFilter) {
-            mFilteredMeetingList.remove(event.Meeting);
+            mApiService.deleteFilteredMeeting(event.Meeting);
             filter();
         } else {
             defaultFilter();
@@ -124,7 +124,8 @@ public class MeetingFragment extends Fragment {
     }
 
     private void filterByDate() {
-        mFilteredMeetingList.clear();
+        mApiService.clearFilteredMeeting();
+        mFilteredMeetingList = mApiService.getFilteredMeetings();
         final Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int month = calendar.get(Calendar.MONTH);
@@ -135,21 +136,23 @@ public class MeetingFragment extends Fragment {
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 int realMonth = month + 1;
                 pickedDate[0] = year
-                        + String.format("%02d", realMonth)
-                        + String.format("%02d", day);
+                        + String.format(Locale.FRANCE,"%02d", realMonth)
+                        + String.format(Locale.FRANCE,"%02d", day);
                 for (Meeting r: mMeetings) {
                     if (pickedDate[0].equals(r.getDate())) {
-                        mFilteredMeetingList.add(r);
+                        mApiService.addFilteredMeeting(r);
                     }
                 }
                 filter();
             }
         }, year, month, day);
         datePickerDialog.show();
+        mFilteredMeetingList = mApiService.getFilteredMeetings();
     }
 
     private void filterByRoom() {
-        mFilteredMeetingList.clear();
+        mApiService.clearFilteredMeeting();
+        mFilteredMeetingList = mApiService.getFilteredMeetings();
         final List<Room> roomsList = mApiService.getRooms();
         final String[] listItems = new String[roomsList.size()];
         final int[] checkedItem = {0};
@@ -175,7 +178,7 @@ public class MeetingFragment extends Fragment {
                 pickedRoom[0] = roomsList.get(mRoomPosition[0]);
                 for (Meeting r: mMeetings) {
                     if (pickedRoom[0].equals(r.getRoom())) {
-                        mFilteredMeetingList.add(r);
+                        mApiService.addFilteredMeeting(r);
                     }
                 }
                 filter();
@@ -189,6 +192,7 @@ public class MeetingFragment extends Fragment {
         });
         AlertDialog mDialog = builder.create();
         mDialog.show();
+        mFilteredMeetingList = mApiService.getFilteredMeetings();
     }
 
     private void defaultFilter() {

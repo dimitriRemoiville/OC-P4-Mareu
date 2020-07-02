@@ -16,6 +16,14 @@ public interface MeetingApiService {
 
     void clearMeeting();
 
+    List<Meeting> getFilteredMeetings();
+
+    void deleteFilteredMeeting(Meeting meeting);
+
+    void addFilteredMeeting(Meeting meeting);
+
+    void clearFilteredMeeting();
+
     List<Room> getRooms();
 
     List<Participant> getParticipants();

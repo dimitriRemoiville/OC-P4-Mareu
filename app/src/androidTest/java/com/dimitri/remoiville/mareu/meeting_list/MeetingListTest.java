@@ -53,19 +53,16 @@ import static org.junit.Assert.*;
 public class MeetingListTest {
 
     private final int ITEM_COUNT = 14;
-    private MainActivity mActivity;
-    private List<Meeting> mMeetingList = DummyMeetingGenerator.DUMMY_MEETINGS;
-    private MeetingApiService mApiService;
 
     @Rule
-    public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule(MainActivity.class);
+    public final ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule(MainActivity.class);
 
     @Before
     public void setUp() {
-        mActivity = mActivityRule.getActivity();
-        assertThat(mActivity, notNullValue());
-        mApiService = DI.getMeetingApiService();
-        mMeetingList = mApiService.getMeetings();
+        MainActivity activity = mActivityRule.getActivity();
+        assertThat(activity, notNullValue());
+        MeetingApiService apiService = DI.getMeetingApiService();
+        List<Meeting> meetingList = apiService.getMeetings();
     }
 
     /**
@@ -90,17 +87,6 @@ public class MeetingListTest {
                 .perform(RecyclerViewActions.actionOnItemAtPosition(1, new DeleteViewAction()));
         // Then : the number of element is 5 now
         onView(ViewMatchers.withId(R.id.list_meeting)).check(withItemCount(ITEM_COUNT - 1));
-    }
-
-    @Test
-    public void myMeetingList_displayActivityAdd() {
-        //Given : Click on the floating action button (addButton)
-        ViewInteraction floatingActionButton = onView(allOf(withId(R.id.addButton),
-                childAtPosition(allOf(withId(R.id.main_content),
-                        childAtPosition(withId(android.R.id.content), 0)), 2), isDisplayed()));
-        floatingActionButton.perform(click());
-        //Then : Check that the activity add meeting is displayed
-        onView(ViewMatchers.withId(R.id.activity_add_meeting)).check(matches(isDisplayed()));
     }
 
     @Test
@@ -139,28 +125,13 @@ public class MeetingListTest {
                         childAtPosition(childAtPosition(withId(R.id.content),0),0), isDisplayed()));
         materialTextView.perform(click());
 
-        ViewInteraction appCompatImageButton = onView(
-                allOf(withClassName(is("androidx.appcompat.widget.AppCompatImageButton")), withContentDescription("Next month"),
-                        childAtPosition(allOf(withClassName(is("android.widget.DayPickerView")),
-                                childAtPosition(withClassName(is("com.android.internal.widget.DialogViewAnimator")),0)),2)));
-        appCompatImageButton.perform(scrollTo(), click());
-
-        ViewInteraction appCompatImageButton2 = onView(
-                allOf(withClassName(is("androidx.appcompat.widget.AppCompatImageButton")), withContentDescription("Next month"),
-                        childAtPosition(
-                                allOf(withClassName(is("android.widget.DayPickerView")),
-                                        childAtPosition(
-                                                withClassName(is("com.android.internal.widget.DialogViewAnimator")),
-                                                0)),
-                                2)));
-        appCompatImageButton2.perform(scrollTo(), click());
 
         ViewInteraction materialButton = onView(allOf(withId(android.R.id.button1), withText("OK"),
                 childAtPosition(childAtPosition(withClassName(is("android.widget.ScrollView")),0),3)));
         materialButton.perform(scrollTo(), click());
 
         // Then : the number of element is 5 now
-        onView(ViewMatchers.withId(R.id.list_meeting)).check(withItemCount(5));
+        onView(ViewMatchers.withId(R.id.list_meeting)).check(withItemCount(2));
     }
 
     private static Matcher<View> childAtPosition(

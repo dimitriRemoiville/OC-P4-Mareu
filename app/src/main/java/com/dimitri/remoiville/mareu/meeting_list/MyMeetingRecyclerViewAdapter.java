@@ -44,8 +44,8 @@ public class MyMeetingRecyclerViewAdapter extends RecyclerView.Adapter<MyMeeting
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final Meeting meeting = mMeetings.get(position);
-        holder.mMeetingName.setText(meeting.getName() +
-                " - " + meeting.getTime() + " - " + meeting.getRoom().getName());
+        String name = meeting.getName() + " - " + meeting.getTime() + " - " + meeting.getRoom().getName();
+        holder.mMeetingName.setText(name);
         StringBuilder eMailsList= new StringBuilder();
         for (int i = 0; i < meeting.getParticipants().size(); i++){
             eMailsList.append(meeting.getParticipants().get(i).getEmail());
