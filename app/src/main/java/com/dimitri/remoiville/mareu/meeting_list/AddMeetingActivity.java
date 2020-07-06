@@ -178,12 +178,10 @@ public class AddMeetingActivity extends AppCompatActivity {
                 builder.setMultiChoiceItems(listItems, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int position, boolean isChecked) {
-                        if(isChecked) {
-                            if(! mParticipantsItems.contains(position)){
-                                mParticipantsItems.add(position);
-                            }
+                        if (isChecked) {
+                            mParticipantsItems.add(position);
                         } else {
-                            if (mParticipantsItems.contains(position)){
+                            if (mParticipantsItems.contains(position)) {
                                 mParticipantsItems.remove(position);
                             }
                         }
