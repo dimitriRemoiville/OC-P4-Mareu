@@ -5,9 +5,6 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -15,6 +12,7 @@ import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dimitri.remoiville.mareu.R;
+import com.dimitri.remoiville.mareu.databinding.FragmentMeetingBinding;
 import com.dimitri.remoiville.mareu.event.DeleteMeetingEvent;
 import com.dimitri.remoiville.mareu.model.Meeting;
 
@@ -36,16 +34,14 @@ public class MyMeetingRecyclerViewAdapter extends RecyclerView.Adapter<MyMeeting
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_meeting, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(FragmentMeetingBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final Meeting meeting = mMeetings.get(position);
         String name = meeting.getName() + " - " + meeting.getTime() + " - " + meeting.getRoom().getName();
-        holder.mMeetingName.setText(name);
+        holder.fragmentMeetingBinding.itemListMeetingName.setText(name);
         StringBuilder eMailsList= new StringBuilder();
         for (int i = 0; i < meeting.getParticipants().size(); i++){
             eMailsList.append(meeting.getParticipants().get(i).getEmail());
@@ -53,14 +49,14 @@ public class MyMeetingRecyclerViewAdapter extends RecyclerView.Adapter<MyMeeting
                 eMailsList.append(", ");
             }
         }
-        holder.mMeetingParticipants.setText(eMailsList.toString());
+        holder.fragmentMeetingBinding.itemListMeetingParticipant.setText(eMailsList.toString());
         Drawable mDrawable = ContextCompat.getDrawable(holder.itemView.getContext(),R.drawable.round_50dp);
         mDrawable = mDrawable.mutate();
         mDrawable = DrawableCompat.wrap(mDrawable);
         DrawableCompat.setTint(mDrawable, Color.parseColor(meeting.getRoom().getColor()));
-        holder.mMeetingImage.setImageDrawable(mDrawable);
+        holder.fragmentMeetingBinding.itemListMeetingImage.setImageDrawable(mDrawable);
 
-        holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
+        holder.fragmentMeetingBinding.itemListDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 EventBus.getDefault().post(new DeleteMeetingEvent(meeting));
@@ -74,17 +70,11 @@ public class MyMeetingRecyclerViewAdapter extends RecyclerView.Adapter<MyMeeting
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public final ImageView mMeetingImage;
-        public final TextView mMeetingName;
-        public final TextView mMeetingParticipants;
-        public final ImageButton mDeleteButton;
+        private FragmentMeetingBinding fragmentMeetingBinding;
 
-        public ViewHolder(View view) {
-            super(view);
-            mMeetingImage = view.findViewById(R.id.item_list_meeting_image);
-            mMeetingName = view.findViewById(R.id.item_list_meeting_name);
-            mMeetingParticipants = view.findViewById(R.id.item_list_meeting_participant);
-            mDeleteButton = view.findViewById(R.id.item_list_delete_button);
+        public ViewHolder(FragmentMeetingBinding fragmentMeetingBinding) {
+            super(fragmentMeetingBinding.getRoot());
+            this.fragmentMeetingBinding = fragmentMeetingBinding;
         }
     }
 }

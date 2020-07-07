@@ -10,8 +10,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.DatePicker;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.TimePicker;
 
 import androidx.appcompat.app.AlertDialog;
@@ -20,13 +18,12 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import com.dimitri.remoiville.mareu.R;
+import com.dimitri.remoiville.mareu.databinding.ActivityAddMeetingBinding;
 import com.dimitri.remoiville.mareu.di.DI;
 import com.dimitri.remoiville.mareu.model.Meeting;
 import com.dimitri.remoiville.mareu.model.Participant;
 import com.dimitri.remoiville.mareu.model.Room;
 import com.dimitri.remoiville.mareu.service.MeetingApiService;
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -36,17 +33,7 @@ import java.util.Locale;
 
 public class AddMeetingActivity extends AppCompatActivity {
 
-    private TextInputLayout mNameMeetingInput;
-    private TextView mRoomTxt;
-    private MaterialButton mPickRoomBtn;
-    private TextView mParticipantTxt;
-    private ImageView mPersonImg;
-    private MaterialButton mPickParticipantsBtn;
-    private TextView mDateTxt;
-    private MaterialButton mPickDateBtn;
-    private TextView mTimeTxt;
-    private MaterialButton mPickTimeBtn;
-    private MaterialButton mAddButton;
+    private ActivityAddMeetingBinding binding;
 
     private DatePickerDialog mDatePickerDialog;
     private TimePickerDialog mTimePickerDialog;
@@ -67,22 +54,14 @@ public class AddMeetingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_meeting);
+        binding = ActivityAddMeetingBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
-        mNameMeetingInput = findViewById(R.id.name_meeting_layout);
-        mRoomTxt = findViewById(R.id.pick_room_txt);
-        mPickRoomBtn = findViewById(R.id.pick_room_btn);
-        mParticipantTxt = findViewById(R.id.pick_participant_txt);
-        mPersonImg = findViewById(R.id.pick_participant_img);
-        mPickParticipantsBtn = findViewById(R.id.pick_participant_btn);
-        mDateTxt = findViewById(R.id.pick_date_txt);
-        mPickDateBtn = findViewById(R.id.pick_date_btn);
-        mTimeTxt = findViewById(R.id.pick_time_txt);
-        mPickTimeBtn = findViewById(R.id.pick_time_btn);
-        mAddButton = findViewById(R.id.create_btn);
         mApiService = DI.getMeetingApiService();
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mAddButton.setEnabled(false);
+        binding.createBtn.setEnabled(false);
         mNameOk = mRoomOk = mParticipantsOk = mTimeOk = mDateOk = false;
 
         managingNameInputLayout();
@@ -95,7 +74,7 @@ public class AddMeetingActivity extends AppCompatActivity {
     }
 
     private void managingNameInputLayout() {
-        mNameMeetingInput.getEditText().addTextChangedListener(new TextWatcher() {
+        binding.nameMeetingLayout.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -124,7 +103,7 @@ public class AddMeetingActivity extends AppCompatActivity {
             listItems[i] = roomsList.get(i).getName();
         }
 
-        mPickRoomBtn.setOnClickListener(new View.OnClickListener() {
+        binding.pickRoomBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
@@ -139,8 +118,8 @@ public class AddMeetingActivity extends AppCompatActivity {
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        mRoomTxt.setText(listItems[mRoomPosition[0]]);
-                        mRoomTxt.setVisibility(View.VISIBLE);
+                        binding.pickRoomTxt.setText(listItems[mRoomPosition[0]]);
+                        binding.pickRoomTxt.setVisibility(View.VISIBLE);
                         checkedItem[0] = mRoomPosition[0];
                         mPickedRoom = roomsList.get(mRoomPosition[0]);
                         mRoomOk = true;
@@ -170,7 +149,7 @@ public class AddMeetingActivity extends AppCompatActivity {
             listItems[i] = participantsList.get(i).getName();
         }
 
-        mPickParticipantsBtn.setOnClickListener(new View.OnClickListener() {
+        binding.pickParticipantBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
@@ -192,9 +171,9 @@ public class AddMeetingActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String participant = mParticipantsItems.size() + " X ";
-                        mParticipantTxt.setText(participant);
-                        mParticipantTxt.setVisibility(View.VISIBLE);
-                        mPersonImg.setVisibility(View.VISIBLE);
+                        binding.pickParticipantTxt.setText(participant);
+                        binding.pickParticipantTxt.setVisibility(View.VISIBLE);
+                        binding.pickParticipantImg.setVisibility(View.VISIBLE);
                         for (int i = 0; i < mParticipantsItems.size(); i++) {
                             mPickedParticipants.add(participantsList.get(mParticipantsItems.get(i)));
                         }
@@ -216,7 +195,7 @@ public class AddMeetingActivity extends AppCompatActivity {
     }
 
     private void displayDatePicker() {
-        mPickDateBtn.setOnClickListener(new View.OnClickListener() {
+        binding.pickDateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final Calendar calendar = Calendar.getInstance();
@@ -228,8 +207,8 @@ public class AddMeetingActivity extends AppCompatActivity {
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                         int realMonth = month + 1;
                         String date = String.format(Locale.FRANCE,"%02d", day) + "/" + String.format(Locale.FRANCE,"%02d", realMonth) + "/" + year;
-                        mDateTxt.setText(date);
-                        mDateTxt.setVisibility(View.VISIBLE);
+                        binding.pickDateTxt.setText(date);
+                        binding.pickDateTxt.setVisibility(View.VISIBLE);
                         mPickedDate = year
                                 + String.format(Locale.FRANCE,"%02d", realMonth)
                                 + String.format(Locale.FRANCE,"%02d", day);
@@ -245,7 +224,7 @@ public class AddMeetingActivity extends AppCompatActivity {
     }
 
     private void displayTimePicker() {
-        mPickTimeBtn.setOnClickListener(new View.OnClickListener() {
+        binding.pickTimeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final Calendar calendar = Calendar.getInstance();
@@ -255,8 +234,8 @@ public class AddMeetingActivity extends AppCompatActivity {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int sHour, int sMinute) {
                         String time = String.format(Locale.FRANCE,"%02d", sHour) + "h" + String.format(Locale.FRANCE,"%02d", sMinute);
-                        mTimeTxt.setText(time);
-                        mTimeTxt.setVisibility(View.VISIBLE);
+                        binding.pickTimeTxt.setText(time);
+                        binding.pickTimeTxt.setVisibility(View.VISIBLE);
                         mTimeOk = true;
                         CheckData();
                         EnabledAddButton();
@@ -271,17 +250,17 @@ public class AddMeetingActivity extends AppCompatActivity {
         if (mTimeOk && mDateOk && mRoomOk) {
             for (Meeting r : mMeetings) {
                 if ((r.getDate().equals(mPickedDate))
-                        && (r.getTime().equals(mTimeTxt.getText().toString()))
+                        && (r.getTime().equals(binding.pickTimeTxt.getText().toString()))
                         && (r.getRoom().getName().equals(mPickedRoom.getName()))) {
                     mDateOk = false;
                     mTimeOk = false;
                     mRoomOk = false;
-                    mRoomTxt.setText("");
-                    mRoomTxt.setVisibility(View.GONE);
-                    mTimeTxt.setText("");
-                    mTimeTxt.setVisibility(View.GONE);
-                    mDateTxt.setText("");
-                    mDateTxt.setVisibility(View.GONE);
+                    binding.pickRoomTxt.setText("");
+                    binding.pickRoomTxt.setVisibility(View.GONE);
+                    binding.pickTimeTxt.setText("");
+                    binding.pickTimeTxt.setVisibility(View.GONE);
+                    binding.pickDateTxt.setText("");
+                    binding.pickDateTxt.setVisibility(View.GONE);
                     AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                     builder.setTitle(R.string.txt_error_room_title)
                             .setMessage(R.string.txt_error_room_message)
@@ -298,14 +277,14 @@ public class AddMeetingActivity extends AppCompatActivity {
     }
 
     private void ManagingAddBtn() {
-        mAddButton.setOnClickListener(new View.OnClickListener() {
+        binding.createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Meeting meeting = new Meeting(
                         System.currentTimeMillis(),
-                        mNameMeetingInput.getEditText().getText().toString(),
+                        binding.nameMeetingLayout.getEditText().getText().toString(),
                         mPickedDate,
-                        mTimeTxt.getText().toString(),
+                        binding.pickTimeTxt.getText().toString(),
                         mPickedRoom,
                         mPickedParticipants);
                 mApiService.createMeeting(meeting);
@@ -316,7 +295,7 @@ public class AddMeetingActivity extends AppCompatActivity {
 
     private void EnabledAddButton() {
         if (mNameOk && mRoomOk && mParticipantsOk && mDateOk && mTimeOk) {
-            mAddButton.setEnabled(true);
+            binding.createBtn.setEnabled(true);
         }
     }
 

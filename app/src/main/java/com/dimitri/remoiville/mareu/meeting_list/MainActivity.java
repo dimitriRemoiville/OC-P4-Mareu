@@ -5,28 +5,27 @@ import android.view.Menu;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.dimitri.remoiville.mareu.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.dimitri.remoiville.mareu.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-    Toolbar mToolbar;
-    MeetingFragment mMeetingFragment;
+    private MeetingFragment mMeetingFragment;
+    private ActivityMainBinding mBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        mToolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
+        mBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        View view = mBinding.getRoot();
+        setContentView(view);
+        setSupportActionBar(mBinding.toolbar);
 
         mMeetingFragment = new MeetingFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.container, mMeetingFragment).commit();
 
-        FloatingActionButton addButton = findViewById(R.id.addButton);
-        addButton.setOnClickListener(new View.OnClickListener() {
+        mBinding.addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AddMeetingActivity.navigate(MainActivity.this);

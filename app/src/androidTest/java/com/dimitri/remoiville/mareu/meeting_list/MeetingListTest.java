@@ -111,7 +111,7 @@ public class MeetingListTest {
 
     @Test
     public void myMeetingList_filterByDate() {
-        //Given : Filter meeting on date 01/08/2020
+        //Given : Filter meeting on current date
         onView(ViewMatchers.withId(R.id.list_meeting)).check(withItemCount(ITEM_COUNT));
         ViewInteraction overflowMenuButton = onView(allOf(withContentDescription("More options"),
                 childAtPosition(childAtPosition(withId(R.id.toolbar), 1), 0), isDisplayed()));
